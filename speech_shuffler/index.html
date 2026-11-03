@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RAOEFFECTX Special Edition Shuffler</title>
+    <style>
+        /* Zero-Dependency Embedded Stylesheet */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background-color: #0f111a;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .board-container {
+            max-width: 34rem;
+            width: 100%;
+            background-color: #161925;
+            border: 1px solid #23273a;
+            border-radius: 1.25rem;
+            padding: 1.75rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        .main-heading {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* Visual Display Card Panel with Embedded Glowing Border Animations */
+        .display-screen {
+            width: 100%;
+            background-color: #0b0c16;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 0.85rem;
+            padding: 2.2rem 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: subtleGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes subtleGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.15); }
+            50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.25); border-color: rgba(59, 130, 246, 0.4); }
+        }
+
+        .screen-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #3b82f6;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+
+        .screen-topic {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
+            transition: all 0.08s ease-in-out;
+        }
+
+        .screen-topic.rolling {
+            color: #475569;
+            opacity: 0.6;
+            transform: scale(0.97);
+        }
+
+        /* Inputs Layout Area */
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.725rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-textarea {
+            width: 100%;
+            background-color: #0b0c16;
+            border: 1px solid #23273a;
+            border-radius: 0.85rem;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            resize: none;
+            line-height: 1.6;
+            outline: none;
+            height: 140px;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+
+        .topic-textarea:focus {
+            border-color: #3b82f6;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding: 0 0.15rem;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .counter-text { color: #475569; }
+
+        /* Touch-Optimized Shuffling Primary Button */
+        .shuffle-button {
+            width: 100%;
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 1.1rem;
+            border-radius: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 10px 20px -3px rgba(37, 99, 235, 0.25);
+            transition: all 0.15s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .shuffle-button:active {
+            transform: scale(0.97);
+            background-color: #1d4ed8;
+        }
+
+        .shuffle-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="board-container">
+        <h1 class="main-heading">🚀 RAOEFFECTX College Students Special Edition</h1>
+
+        <div class="display-screen">
+            <span id="screenLabel" class="screen-label">POOL ACTIVE</span>
+            <h2 id="screenTopic" class="screen-topic">Enter topics below to begin shuffling</h2>
+        </div>
+
+        <div class="input-group">
+            <label class="input-label">Custom Presentation Input Pool</label>
+            <textarea id="topicInput" class="topic-textarea" placeholder="Type items here (one per line)..."></textarea>
+            <div class="meta-row">
+                <span id="topicCounter" class="counter-text">Detected 0 total topics</span>
+                <span id="poolCounter" style="color: #3b82f6;">Remaining in loop: 0</span>
+            </div>
+        </div>
+
+        <button id="shuffleBtn" onclick="runIndependentShuffle()">⚡ Shuffle & Pick Topic!</button>
+    </div>
+
+    <script>
+        /* Self-Contained Independent JavaScript Engine */
+        const inputField = document.getElementById('topicInput');
+        let memoryTrackingPool = [];
+
+        // Match your custom configuration directly 
+        inputField.value = "java\nair\nwater\npages";
+
+        function syncIndependentPool() {
+            const list = inputField.value.split('\n').map(t => t.trim()).filter(t => t.length > 0);
+            document.getElementById('topicCounter').innerText = `Detected ${list.length} total topics`;
+            
+            // Clean memory array boundaries dynamically
+            if (memoryTrackingPool.length === 0 || memoryTrackingPool.some(item => !list.includes(item)) || memoryTrackingPool.length > list.length) {
+                memoryTrackingPool = [...list];
+            }
+            document.getElementById('poolCounter').innerText = `Remaining in loop: ${memoryTrackingPool.length}`;
+        }
+        
+        inputField.addEventListener('input', syncIndependentPool);
+        syncIndependentPool();
+
+        function runIndependentShuffle() {
+            const list = inputField.value.split('\n').map(t => t.trim()).filter(t => t.length > 0);
+            if (list.length === 0) return alert("Please add topics to the input field first!");
+            
+            if (memoryTrackingPool.length === 0) memoryTrackingPool = [...list];
+
+            const btn = document.getElementById('shuffleBtn');
+            const topicTxt = document.getElementById('screenTopic');
+            const labelTxt = document.getElementById('screenLabel');
+
+            btn.disabled = true;
+            labelTxt.innerText = "SHUFFLING...";
+            labelTxt.style.color = "#3b82f6";
+            
+            let ticks = 0;
+            const timer = setInterval(() => {
+                topicTxt.innerText = list[Math.floor(Math.random() * list.length)];
+                topicTxt.className = "screen-topic rolling";
+                
+                if (++ticks >= 15) {
+                    clearInterval(timer);
+                    
+                    // Pull strictly from the isolated non-repeating memory indices 
+                    const idx = Math.floor(Math.random() * memoryTrackingPool.length);
+                    const choice = memoryTrackingPool.splice(idx, 1);
+                    
+                    topicTxt.innerText = choice;
+                    topicTxt.className = "screen-topic";
+                    
+                    labelTxt.innerText = memoryTrackingPool.length === 0 ? "LOOP DONE! REBOOTING POOL..." : "UNIQUE TOPIC DEPLOYED";
+                    labelTxt.style.color = memoryTrackingPool.length === 0 ? "#f59e0b" : "#10b981";
+                    
+                    syncIndependentPool();
+                    btn.disabled = false;
+                }
+            }, 70);
+        }
+    </script>
+</body>
+</html>
