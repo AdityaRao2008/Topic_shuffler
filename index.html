@@ -150,19 +150,20 @@
 
         .counter-text { color: #475569; }
 
+        /* MATCHES YOUR EXACT BLUE SCREENSHOT BUTTON METRICS */
         .shuffle-button {
             width: 100%;
-            background-color: #2563eb;
+            background: linear-gradient(180deg, #2b6bf3 0%, #1e5ad4 100%);
             color: #ffffff;
             border: none;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 700;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
             text-transform: uppercase;
-            padding: 1.15rem;
-            border-radius: 0.85rem;
+            padding: 1.25rem;
+            border-radius: 1rem;
             cursor: pointer;
-            box-shadow: 0 10px 25px -3px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 8px 24px rgba(30, 90, 212, 0.35);
             transition: all 0.15s ease-in-out;
             display: flex;
             align-items: center;
@@ -171,8 +172,9 @@
         }
 
         .shuffle-button:active {
-            transform: scale(0.975);
-            background-color: #1d4ed8;
+            transform: scale(0.98);
+            background: linear-gradient(180deg, #1e5ad4 0%, #174cb6 100%);
+            box-shadow: 0 4px 12px rgba(30, 90, 212, 0.2);
         }
 
         .shuffle-button:disabled {
